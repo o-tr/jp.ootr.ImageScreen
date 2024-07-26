@@ -1,27 +1,22 @@
 ﻿using jp.ootr.common;
+using jp.ootr.ImageDeviceController.Editor;
 using UnityEditor;
 
 namespace jp.ootr.ImageScreen.Editor
 {
     [CustomEditor(typeof(ImageScreen))]
-    public class ImageScreenEditor : UnityEditor.Editor
+    public class ImageScreenEditor : CommonDeviceEditor
     {
         private bool debug;
         public override void OnInspectorGUI()
         {
-            var script = (ImageScreen)target;
-            
-            debug = EditorGUILayout.ToggleLeft("Debug", debug);
-            if (debug)
+            base.OnInspectorGUI();
+            if (Debug)
             {
-                base.OnInspectorGUI();
                 return;
             }
-
-            EditorGUILayout.LabelField("ImageScreen", EditorStyle.UiTitle);
-
-            EditorGUILayout.Space();
-
+            var script = (ImageScreen)target;
+            
             EditorGUILayout.LabelField("Device Name");
             var lastDeviceName = script.deviceName;
             script.deviceName = EditorGUILayout.TextField(script.deviceName);
@@ -31,6 +26,10 @@ namespace jp.ootr.ImageScreen.Editor
             {
                 EditorUtility.SetDirty(script);
             }
+        }
+        public override void ShowScriptName()
+        {
+            EditorGUILayout.LabelField("ImageScreen", EditorStyle.UiTitle);
         }
     }
 }
