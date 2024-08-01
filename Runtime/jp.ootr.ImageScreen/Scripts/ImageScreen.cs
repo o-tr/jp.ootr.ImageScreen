@@ -31,6 +31,11 @@ namespace jp.ootr.ImageScreen
         {
             return "jp.ootr.ImageScreen.ImageScreen";
         }
+        
+        public override string GetDisplayName()
+        {
+            return "ImageScreen";
+        }
 
         public override void ShowScreenName()
         {
@@ -47,7 +52,7 @@ namespace jp.ootr.ImageScreen
                 return;
             }
 
-            Controller.UsAddUrl(tmpUrl);
+            controller.UsAddUrl(tmpUrl);
             SetLoading(true);
         }
 
@@ -69,7 +74,7 @@ namespace jp.ootr.ImageScreen
             if ((SiSource == SiLocalSource && SiFileName == SiLocalFileName) || SiSource.IsNullOrEmpty()) return;
             ConsoleDebug($"[_OnDeserialization] source: {SiSource}, fileName: {SiFileName}");
             SetLoading(true);
-            Controller.CcReleaseTexture(SiLocalSource, SiLocalFileName);
+            controller.CcReleaseTexture(SiLocalSource, SiLocalFileName);
             LLIFetchImage(SiSource, SiSource == SiFileName ? URLType.Image : URLType.TextZip);
         }
 
@@ -80,7 +85,7 @@ namespace jp.ootr.ImageScreen
             if (!fileNames.Has(SiFileName)) return;
             SiLocalSource = source;
             SiLocalFileName = SiFileName;
-            var texture = Controller.CcGetTexture(SiLocalSource, SiLocalFileName);
+            var texture = controller.CcGetTexture(SiLocalSource, SiLocalFileName);
             image.texture = texture;
             aspectRatioFitter.aspectRatio = (float)texture.width / texture.height;
             SetLoading(false);
