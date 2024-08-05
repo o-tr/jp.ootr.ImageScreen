@@ -1,10 +1,11 @@
 ﻿using jp.ootr.common;
+using jp.ootr.ImageDeviceController.Editor;
 using UnityEditor;
 
 namespace jp.ootr.ImageScreen.Editor
 {
     [CustomEditor(typeof(ImageScreen))]
-    public class ImageScreenEditor : UnityEditor.Editor
+    public class ImageScreenEditor : CommonDeviceEditor
     {
         private bool debug;
         public override void OnInspectorGUI()
