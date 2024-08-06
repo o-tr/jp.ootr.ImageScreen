@@ -80,6 +80,7 @@ namespace jp.ootr.ImageScreen
 
         public override void OnFilesLoadSuccess(string source, string[] fileNames)
         {
+            base.OnFilesLoadSuccess(source, fileNames);
             ConsoleDebug($"[OnFilesLoadSuccess] source: {source}");
             if (source != SiSource) return;
             if (!fileNames.Has(SiFileName)) return;
@@ -93,6 +94,7 @@ namespace jp.ootr.ImageScreen
 
         public override void OnFilesLoadFailed(LoadError error)
         {
+            base.OnFilesLoadFailed(error);
             SetLoading(false);
         }
 
