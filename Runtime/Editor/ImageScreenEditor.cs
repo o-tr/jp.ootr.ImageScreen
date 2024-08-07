@@ -8,10 +8,11 @@ namespace jp.ootr.ImageScreen.Editor
     public class ImageScreenEditor : CommonDeviceEditor
     {
         private bool debug;
+
         public override void OnInspectorGUI()
         {
             var script = (ImageScreen)target;
-            
+
             debug = EditorGUILayout.ToggleLeft("Debug", debug);
             if (debug)
             {

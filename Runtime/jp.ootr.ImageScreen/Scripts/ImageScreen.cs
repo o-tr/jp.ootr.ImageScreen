@@ -15,7 +15,7 @@ namespace jp.ootr.ImageScreen
         [SerializeField] protected RawImage image;
         [SerializeField] protected AspectRatioFitter aspectRatioFitter;
 
-        [SerializeField] public TextMeshProUGUI  inputField;
+        [SerializeField] public TextMeshProUGUI inputField;
 
         protected readonly int AnimatorIsLoading = Animator.StringToHash("IsLoading");
         protected readonly int AnimatorShowScreenName = Animator.StringToHash("ShowScreenName");
@@ -31,7 +31,7 @@ namespace jp.ootr.ImageScreen
         {
             return "jp.ootr.ImageScreen.ImageScreen";
         }
-        
+
         public override string GetDisplayName()
         {
             return "ImageScreen";
