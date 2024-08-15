@@ -361,7 +361,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 80f6f5ba4c64a3548824554aa4c635af, type: 3}
+  m_Texture: {fileID: 2800000, guid: af11f8caaa2982741a67c817b566aed1, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -381,7 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 3
-  m_AspectRatio: 1
+  m_AspectRatio: 1.7777778
 --- !u!1 &3108243087347620392
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,7 +474,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4031852142941754035
 RectTransform:
   m_ObjectHideFlags: 0
@@ -595,6 +595,7 @@ MonoBehaviour:
   devices: []
   controller: {fileID: 0}
   splashImage: {fileID: 3635133535824717045}
+  splashImageFitter: {fileID: 2076074800460408073}
   deviceUuid: e794d313-a78a-43a6-be93-cc9af8250a59
   image: {fileID: 3635133535824717045}
   aspectRatioFitter: {fileID: 2076074800460408073}
