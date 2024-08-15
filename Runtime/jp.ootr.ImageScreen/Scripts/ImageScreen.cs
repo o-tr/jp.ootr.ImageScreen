@@ -17,15 +17,15 @@ namespace jp.ootr.ImageScreen
 
         [SerializeField] public TextMeshProUGUI inputField;
 
-        protected readonly int AnimatorIsLoading = Animator.StringToHash("IsLoading");
-        protected readonly int AnimatorShowScreenName = Animator.StringToHash("ShowScreenName");
+        private readonly int _animatorIsLoading = Animator.StringToHash("IsLoading");
+        private readonly int _animatorShowScreenName = Animator.StringToHash("ShowScreenName");
 
-        protected bool IsLoading;
-        [UdonSynced] protected string SiFileName;
-        protected string SiLocalFileName;
-        protected string SiLocalSource;
+        private bool _isLoading;
+        [UdonSynced] private string _siFileName;
+        private string _siLocalFileName;
+        private string _siLocalSource;
 
-        [UdonSynced] protected string SiSource;
+        [UdonSynced] private string _siSource;
 
         public override string GetClassName()
         {
@@ -39,13 +39,13 @@ namespace jp.ootr.ImageScreen
 
         public override void ShowScreenName()
         {
-            animator.SetTrigger(AnimatorShowScreenName);
+            animator.SetTrigger(_animatorShowScreenName);
         }
 
         public virtual void LoadImage(VRCUrl tmpUrl)
         {
             var tmpUrlStr = tmpUrl.ToString();
-            if (IsLoading || SiSource == tmpUrlStr || tmpUrlStr.IsNullOrEmpty()) return;
+            if (_isLoading || _siSource == tmpUrlStr || tmpUrlStr.IsNullOrEmpty()) return;
             if (!tmpUrlStr.IsValidUrl(out var error))
             {
                 OnFilesLoadFailed(error);
@@ -64,29 +64,29 @@ namespace jp.ootr.ImageScreen
         public override void LoadImage(string source, string fileName, bool shouldPushHistory = false)
         {
             ConsoleDebug($"[LoadImage] source: {source}, fileName: {fileName}");
-            SiSource = source;
-            SiFileName = fileName;
+            _siSource = source;
+            _siFileName = fileName;
             Sync();
         }
 
         public override void _OnDeserialization()
         {
-            if ((SiSource == SiLocalSource && SiFileName == SiLocalFileName) || SiSource.IsNullOrEmpty()) return;
-            ConsoleDebug($"[_OnDeserialization] source: {SiSource}, fileName: {SiFileName}");
+            if ((_siSource == _siLocalSource && _siFileName == _siLocalFileName) || _siSource.IsNullOrEmpty()) return;
+            ConsoleDebug($"[_OnDeserialization] source: {_siSource}, fileName: {_siFileName}");
             SetLoading(true);
-            controller.CcReleaseTexture(SiLocalSource, SiLocalFileName);
-            LLIFetchImage(SiSource, SiSource == SiFileName ? URLType.Image : URLType.TextZip);
+            controller.CcReleaseTexture(_siLocalSource, _siLocalFileName);
+            LLIFetchImage(_siSource, _siSource == _siFileName ? URLType.Image : URLType.TextZip);
         }
 
         public override void OnFilesLoadSuccess(string source, string[] fileNames)
         {
             base.OnFilesLoadSuccess(source, fileNames);
             ConsoleDebug($"[OnFilesLoadSuccess] source: {source}");
-            if (source != SiSource) return;
-            if (!fileNames.Has(SiFileName)) return;
-            SiLocalSource = source;
-            SiLocalFileName = SiFileName;
-            var texture = controller.CcGetTexture(SiLocalSource, SiLocalFileName);
+            if (source != _siSource) return;
+            if (!fileNames.Has(_siFileName)) return;
+            _siLocalSource = source;
+            _siLocalFileName = _siFileName;
+            var texture = controller.CcGetTexture(_siLocalSource, _siLocalFileName);
             image.texture = texture;
             aspectRatioFitter.aspectRatio = (float)texture.width / texture.height;
             SetLoading(false);
@@ -100,8 +100,8 @@ namespace jp.ootr.ImageScreen
 
         protected virtual void SetLoading(bool loading)
         {
-            IsLoading = loading;
-            animator.SetBool(AnimatorIsLoading, loading);
+            _isLoading = loading;
+            animator.SetBool(_animatorIsLoading, loading);
         }
 
         public override bool IsCastableDevice()
