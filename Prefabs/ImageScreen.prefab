@@ -152,7 +152,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d0ac8bd99ef74d6580b17741dd241156, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1267379928067709589
@@ -285,7 +285,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a09012175991f53478076dd692cdfa81, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8e6d3cdc5b6a4564fbb46145a4570bb4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -447,7 +447,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a09012175991f53478076dd692cdfa81, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8e6d3cdc5b6a4564fbb46145a4570bb4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -523,7 +523,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a09012175991f53478076dd692cdfa81, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8e6d3cdc5b6a4564fbb46145a4570bb4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -596,7 +596,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   splashImage: {fileID: 3635133535824717045}
   splashImageFitter: {fileID: 2076074800460408073}
-  deviceUuid: e794d313-a78a-43a6-be93-cc9af8250a59
+  deviceUuid: 41478f63-0a2e-4c80-a7b5-702ff9ba915f
   image: {fileID: 3635133535824717045}
   aspectRatioFitter: {fileID: 2076074800460408073}
   inputField: {fileID: 4171549972037289924}
@@ -690,7 +690,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 531052f1ee3500540b0561c43c62fb8e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6c012ca24b46f014f9fc82648b9415d0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
