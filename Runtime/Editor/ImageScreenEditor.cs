@@ -1,4 +1,5 @@
-﻿using jp.ootr.common;
+﻿#if UNITY_EDITOR
+using jp.ootr.common;
 using jp.ootr.ImageDeviceController.Editor;
 using UnityEditor;
 
@@ -13,3 +14,4 @@ namespace jp.ootr.ImageScreen.Editor
         }
     }
 }
+#endif
