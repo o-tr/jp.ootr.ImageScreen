@@ -1,3 +1,4 @@
+using System;
 using jp.ootr.common;
 using jp.ootr.ImageDeviceController;
 using jp.ootr.ImageDeviceController.CommonDevice;
@@ -17,6 +18,8 @@ namespace jp.ootr.ImageScreen
 
         [SerializeField] public TextMeshProUGUI inputField;
 
+        public ulong lastImageUpdated = 0;
+        
         private readonly int _animatorIsLoading = Animator.StringToHash("IsLoading");
         private readonly int _animatorShowScreenName = Animator.StringToHash("ShowScreenName");
 
@@ -26,6 +29,8 @@ namespace jp.ootr.ImageScreen
         private string _siLocalSource;
 
         [UdonSynced] private string _siSource;
+        
+        private readonly string[] _imageScreenPrefixes = new[] { "ImageScreen" };
 
         public override string GetClassName()
         {
@@ -63,16 +68,17 @@ namespace jp.ootr.ImageScreen
 
         public override void LoadImage(string source, string fileName, bool shouldPushHistory = false)
         {
-            ConsoleDebug($"[LoadImage] source: {source}, fileName: {fileName}");
+            ConsoleDebug($"laod image: {source}, {fileName}", _imageScreenPrefixes);
             _siSource = source;
             _siFileName = fileName;
+            lastImageUpdated = DateTime.Now.ToUnixTime();
             Sync();
         }
 
         public override void _OnDeserialization()
         {
             if ((_siSource == _siLocalSource && _siFileName == _siLocalFileName) || _siSource.IsNullOrEmpty()) return;
-            ConsoleDebug($"[_OnDeserialization] source: {_siSource}, fileName: {_siFileName}");
+            ConsoleDebug($"_OnDeserialization: {_siSource}, {_siFileName}", _imageScreenPrefixes);
             SetLoading(true);
             controller.CcReleaseTexture(_siLocalSource, _siLocalFileName);
             LLIFetchImage(_siSource, _siSource == _siFileName ? URLType.Image : URLType.TextZip);
@@ -81,7 +87,7 @@ namespace jp.ootr.ImageScreen
         public override void OnFilesLoadSuccess(string source, string[] fileNames)
         {
             base.OnFilesLoadSuccess(source, fileNames);
-            ConsoleDebug($"[OnFilesLoadSuccess] source: {source}");
+            ConsoleDebug($"image load success: {source}, {fileNames}", _imageScreenPrefixes);
             if (source != _siSource) return;
             if (!fileNames.Has(_siFileName)) return;
             _siLocalSource = source;
@@ -95,6 +101,7 @@ namespace jp.ootr.ImageScreen
         public override void OnFilesLoadFailed(LoadError error)
         {
             base.OnFilesLoadFailed(error);
+            ConsoleError($"image load failed: {error.GetString()}", _imageScreenPrefixes);
             SetLoading(false);
         }
 
