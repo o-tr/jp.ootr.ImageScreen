@@ -589,6 +589,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 3457760381816667950}
+  logLevel: 0
   deviceName: 
   deviceIcon: {fileID: 2800000, guid: 7cd9fabac899e18498bda5a376503c85, type: 3}
   animator: {fileID: 5457663661123457394}

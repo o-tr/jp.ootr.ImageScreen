@@ -1,3 +1,4 @@
+using System;
 using jp.ootr.common;
 using jp.ootr.ImageDeviceController;
 using jp.ootr.ImageDeviceController.CommonDevice;
@@ -17,6 +18,8 @@ namespace jp.ootr.ImageScreen
 
         [SerializeField] public TextMeshProUGUI inputField;
 
+        public ulong lastImageUpdated;
+        
         private readonly int _animatorIsLoading = Animator.StringToHash("IsLoading");
         private readonly int _animatorShowScreenName = Animator.StringToHash("ShowScreenName");
 
@@ -91,6 +94,7 @@ namespace jp.ootr.ImageScreen
             var texture = controller.CcGetTexture(_siLocalSource, _siLocalFileName);
             image.texture = texture;
             aspectRatioFitter.aspectRatio = (float)texture.width / texture.height;
+            lastImageUpdated = DateTime.Now.ToUnixTime();
             SetLoading(false);
         }
 
