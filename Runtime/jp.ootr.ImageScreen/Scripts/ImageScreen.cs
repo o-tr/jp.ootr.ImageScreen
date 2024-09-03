@@ -18,7 +18,7 @@ namespace jp.ootr.ImageScreen
 
         [SerializeField] public TextMeshProUGUI inputField;
 
-        public ulong lastImageUpdated;
+        public ulong lastImageUpdated = 0;
         
         private readonly int _animatorIsLoading = Animator.StringToHash("IsLoading");
         private readonly int _animatorShowScreenName = Animator.StringToHash("ShowScreenName");
@@ -71,6 +71,7 @@ namespace jp.ootr.ImageScreen
             ConsoleDebug($"laod image: {source}, {fileName}", _imageScreenPrefixes);
             _siSource = source;
             _siFileName = fileName;
+            lastImageUpdated = DateTime.Now.ToUnixTime();
             Sync();
         }
 
@@ -94,7 +95,6 @@ namespace jp.ootr.ImageScreen
             var texture = controller.CcGetTexture(_siLocalSource, _siLocalFileName);
             image.texture = texture;
             aspectRatioFitter.aspectRatio = (float)texture.width / texture.height;
-            lastImageUpdated = DateTime.Now.ToUnixTime();
             SetLoading(false);
         }
 
