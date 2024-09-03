@@ -50,12 +50,9 @@ namespace jp.ootr.ImageScreen.Editor
     {
         public static void UpdateScreenNames(ImageScreen[] scripts)
         {
-            foreach (var script in scripts)
-            {
-                UpdateScreenName(script);
-            }
+            foreach (var script in scripts) UpdateScreenName(script);
         }
-        
+
         private static void UpdateScreenName(ImageScreen script)
         {
             script.inputField.text = script.deviceName;
