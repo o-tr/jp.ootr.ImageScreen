@@ -18,10 +18,12 @@ namespace jp.ootr.ImageScreen
 
         [SerializeField] public TextMeshProUGUI inputField;
 
-        public ulong lastImageUpdated = 0;
-        
+        public ulong lastImageUpdated;
+
         private readonly int _animatorIsLoading = Animator.StringToHash("IsLoading");
         private readonly int _animatorShowScreenName = Animator.StringToHash("ShowScreenName");
+
+        private readonly string[] _imageScreenPrefixes = { "ImageScreen" };
 
         private bool _isLoading;
         [UdonSynced] private string _siFileName;
@@ -29,8 +31,6 @@ namespace jp.ootr.ImageScreen
         private string _siLocalSource;
 
         [UdonSynced] private string _siSource;
-        
-        private readonly string[] _imageScreenPrefixes = new[] { "ImageScreen" };
 
         public override string GetClassName()
         {
