@@ -597,10 +597,12 @@ MonoBehaviour:
   controller: {fileID: 0}
   splashImage: {fileID: 3635133535824717045}
   splashImageFitter: {fileID: 2076074800460408073}
+  splashImageTexture: {fileID: 2800000, guid: af11f8caaa2982741a67c817b566aed1, type: 3}
   deviceUuid: 41478f63-0a2e-4c80-a7b5-702ff9ba915f
   image: {fileID: 3635133535824717045}
   aspectRatioFitter: {fileID: 2076074800460408073}
   inputField: {fileID: 4171549972037289924}
+  lastImageUpdated: 0
 --- !u!114 &3457760381816667950
 MonoBehaviour:
   m_ObjectHideFlags: 0
