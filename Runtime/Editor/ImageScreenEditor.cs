@@ -1,6 +1,7 @@
 ﻿#if UNITY_EDITOR
 using jp.ootr.common;
 using jp.ootr.ImageDeviceController.Editor;
+using TMPro;
 using UnityEditor;
 using VRC.SDKBase.Editor.BuildPipeline;
 
@@ -42,6 +43,7 @@ namespace jp.ootr.ImageScreen.Editor
 
         public bool OnBuildRequested(VRCSDKRequestedBuildType requestedBuildType)
         {
+            ImageScreenUtils.UpdateScreenNames(ComponentUtils.GetAllComponents<ImageScreen>().ToArray());
             return CommonDeviceUtils.SetupDevices();
         }
     }
@@ -55,7 +57,13 @@ namespace jp.ootr.ImageScreen.Editor
 
         private static void UpdateScreenName(ImageScreen script)
         {
-            script.inputField.text = script.deviceName;
+            var so = new SerializedObject(script);
+            var tmp = (TextMeshProUGUI)so.FindProperty("inputField").objectReferenceValue;
+            if (tmp == null) return;
+            var tmpSo = new SerializedObject(tmp);
+            tmpSo.Update();
+            tmpSo.FindProperty("m_text").stringValue = script.deviceName;
+            tmpSo.ApplyModifiedProperties();
         }
     }
 }
