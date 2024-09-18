@@ -10,9 +10,9 @@ namespace jp.ootr.ImageScreen.Editor
     [CustomEditor(typeof(ImageScreen))]
     public class ImageScreenEditor : CommonDeviceEditor
     {
-        protected override void ShowScriptName()
+        protected override string GetScriptName()
         {
-            EditorGUILayout.LabelField("ImageScreen", EditorStyle.UiTitle);
+            return "ImageScreen";
         }
     }
 
