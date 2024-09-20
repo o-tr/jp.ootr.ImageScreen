@@ -3,6 +3,7 @@ using jp.ootr.common;
 using jp.ootr.ImageDeviceController.Editor;
 using TMPro;
 using UnityEditor;
+using UnityEngine.UIElements;
 using VRC.SDKBase.Editor.BuildPipeline;
 
 namespace jp.ootr.ImageScreen.Editor
@@ -13,6 +14,12 @@ namespace jp.ootr.ImageScreen.Editor
         protected override string GetScriptName()
         {
             return "ImageScreen";
+        }
+
+        protected override VisualElement GetContentTk()
+        {
+            var root = new VisualElement();
+            return root;
         }
     }
 
