@@ -22,6 +22,7 @@ namespace jp.ootr.ImageScreen
 
         private readonly int _animatorIsLoading = Animator.StringToHash("IsLoading");
         private readonly int _animatorShowScreenName = Animator.StringToHash("ShowScreenName");
+        private readonly int _animatorShowSplash = Animator.StringToHash("ShowSplash");
 
         private readonly string[] _imageScreenPrefixes = { "ImageScreen" };
 
@@ -31,6 +32,8 @@ namespace jp.ootr.ImageScreen
         private string _siLocalSource;
 
         [UdonSynced] private string _siSource;
+        
+        private bool _isInitialized = false;
 
         public override string GetClassName()
         {
@@ -96,6 +99,9 @@ namespace jp.ootr.ImageScreen
             image.texture = texture;
             aspectRatioFitter.aspectRatio = (float)texture.width / texture.height;
             SetLoading(false);
+            if (_isInitialized) return;
+            _isInitialized = true;
+            animator.SetBool(_animatorShowSplash, false);
         }
 
         public override void OnFilesLoadFailed(LoadError error)
