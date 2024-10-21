@@ -3,6 +3,7 @@ using jp.ootr.common;
 using jp.ootr.ImageDeviceController.Editor;
 using TMPro;
 using UnityEditor;
+using UnityEngine.UIElements;
 using VRC.SDKBase.Editor.BuildPipeline;
 
 namespace jp.ootr.ImageScreen.Editor
@@ -10,9 +11,15 @@ namespace jp.ootr.ImageScreen.Editor
     [CustomEditor(typeof(ImageScreen))]
     public class ImageScreenEditor : CommonDeviceEditor
     {
-        protected override void ShowScriptName()
+        protected override string GetScriptName()
         {
-            EditorGUILayout.LabelField("ImageScreen", EditorStyle.UiTitle);
+            return "ImageScreen";
+        }
+
+        protected override VisualElement GetContentTk()
+        {
+            var root = new VisualElement();
+            return root;
         }
     }
 
