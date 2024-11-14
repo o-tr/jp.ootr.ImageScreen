@@ -84,13 +84,15 @@ namespace jp.ootr.ImageScreen
             ConsoleDebug($"_OnDeserialization: {_siSource}, {_siFileName}", _imageScreenPrefixes);
             SetLoading(true);
             controller.CcReleaseTexture(_siLocalSource, _siLocalFileName);
-            LLIFetchImage(_siSource, _siSource == _siFileName ? URLType.Image : URLType.TextZip);
+            
+            _siFileName.ParseFileName(out var type);
+            LLIFetchImage(_siSource, type);
         }
 
         public override void OnFilesLoadSuccess(string source, string[] fileNames)
         {
             base.OnFilesLoadSuccess(source, fileNames);
-            ConsoleDebug($"image load success: {source}, {fileNames}", _imageScreenPrefixes);
+            ConsoleDebug($"image load success: {source}, {string.Join(",",fileNames)}", _imageScreenPrefixes);
             if (source != _siSource) return;
             if (!fileNames.Has(_siFileName)) return;
             _siLocalSource = source;
