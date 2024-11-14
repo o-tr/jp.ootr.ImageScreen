@@ -92,7 +92,7 @@ namespace jp.ootr.ImageScreen
         public override void OnFilesLoadSuccess(string source, string[] fileNames)
         {
             base.OnFilesLoadSuccess(source, fileNames);
-            ConsoleDebug($"image load success: {source}, {fileNames}", _imageScreenPrefixes);
+            ConsoleDebug($"image load success: {source}, {string.Join(",",fileNames)}", _imageScreenPrefixes);
             if (source != _siSource) return;
             if (!fileNames.Has(_siFileName)) return;
             _siLocalSource = source;
