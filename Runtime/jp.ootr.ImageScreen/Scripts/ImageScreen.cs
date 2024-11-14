@@ -85,14 +85,9 @@ namespace jp.ootr.ImageScreen
             SetLoading(true);
             controller.CcReleaseTexture(_siLocalSource, _siLocalFileName);
             
-            _siFileName.ParseFileName(out var type);
+            _siFileName.ParseFileName(out var type, out var options);
             
-            if (type == URLType.Video)
-            {
-                ConsoleDebug($"Video source will load by other device: {_siSource}, {_siFileName}", _imageScreenPrefixes);
-                return;
-            }
-            LLIFetchImage(_siSource, type);
+            LLIFetchImage(_siSource, type, options);
         }
 
         public override void OnFilesLoadSuccess(string source, string[] fileNames)
