@@ -86,6 +86,12 @@ namespace jp.ootr.ImageScreen
             controller.CcReleaseTexture(_siLocalSource, _siLocalFileName);
             
             _siFileName.ParseFileName(out var type);
+            
+            if (type == URLType.Video)
+            {
+                ConsoleDebug($"Video source will load by other device: {_siSource}, {_siFileName}", _imageScreenPrefixes);
+                return;
+            }
             LLIFetchImage(_siSource, type);
         }
 
