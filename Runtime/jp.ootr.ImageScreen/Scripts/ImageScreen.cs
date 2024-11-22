@@ -78,6 +78,14 @@ namespace jp.ootr.ImageScreen
             Sync();
         }
 
+        public override void OnPlayerJoined(VRCPlayerApi player)
+        {
+            base.OnPlayerJoined(player);
+            if (!Networking.IsOwner(gameObject) || player.isLocal) return;
+            if (_siSource.IsNullOrEmpty()) return;
+            Sync();
+        }
+
         public override void _OnDeserialization()
         {
             if ((_siSource == _siLocalSource && _siFileName == _siLocalFileName) || _siSource.IsNullOrEmpty()) return;
