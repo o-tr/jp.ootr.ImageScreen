@@ -26,14 +26,14 @@ namespace jp.ootr.ImageScreen
 
         private readonly string[] _imageScreenPrefixes = { "ImageScreen" };
 
+        private bool _isInitialized;
+
         private bool _isLoading;
         [UdonSynced] private string _siFileName;
         private string _siLocalFileName;
         private string _siLocalSource;
 
         [UdonSynced] private string _siSource;
-        
-        private bool _isInitialized;
 
         public override string GetClassName()
         {
@@ -92,16 +92,16 @@ namespace jp.ootr.ImageScreen
             ConsoleDebug($"_OnDeserialization: {_siSource}, {_siFileName}", _imageScreenPrefixes);
             SetLoading(true);
             controller.CcReleaseTexture(_siLocalSource, _siLocalFileName);
-            
+
             _siFileName.ParseFileName(out var type, out var options);
-            
+
             LLIFetchImage(_siSource, type, options);
         }
 
         public override void OnFilesLoadSuccess(string source, string[] fileNames)
         {
             base.OnFilesLoadSuccess(source, fileNames);
-            ConsoleDebug($"image load success: {source}, {string.Join(",",fileNames)}", _imageScreenPrefixes);
+            ConsoleDebug($"image load success: {source}, {string.Join(",", fileNames)}", _imageScreenPrefixes);
             if (source != _siSource) return;
             if (!fileNames.Has(_siFileName)) return;
             _siLocalSource = source;
@@ -112,6 +112,7 @@ namespace jp.ootr.ImageScreen
                 image.texture = texture;
                 aspectRatioFitter.aspectRatio = (float)texture.width / texture.height;
             }
+
             SetLoading(false);
             if (_isInitialized) return;
             _isInitialized = true;
