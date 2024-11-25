@@ -33,7 +33,7 @@ namespace jp.ootr.ImageScreen
 
         [UdonSynced] private string _siSource;
         
-        private bool _isInitialized = false;
+        private bool _isInitialized;
 
         public override string GetClassName()
         {
@@ -107,8 +107,11 @@ namespace jp.ootr.ImageScreen
             _siLocalSource = source;
             _siLocalFileName = _siFileName;
             var texture = controller.CcGetTexture(_siLocalSource, _siLocalFileName);
-            image.texture = texture;
-            aspectRatioFitter.aspectRatio = (float)texture.width / texture.height;
+            if (texture != null)
+            {
+                image.texture = texture;
+                aspectRatioFitter.aspectRatio = (float)texture.width / texture.height;
+            }
             SetLoading(false);
             if (_isInitialized) return;
             _isInitialized = true;
