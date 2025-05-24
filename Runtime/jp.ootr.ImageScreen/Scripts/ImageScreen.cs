@@ -56,7 +56,7 @@ namespace jp.ootr.ImageScreen
             if (_isLoading || _siSource == tmpUrlStr || tmpUrlStr.IsNullOrEmpty()) return;
             if (!tmpUrlStr.IsValidUrl(out var error))
             {
-                OnFilesLoadFailed(error);
+                OnSourceLoadFailed(error);
                 return;
             }
 
@@ -98,14 +98,27 @@ namespace jp.ootr.ImageScreen
             LLIFetchImage(_siSource, type, options);
         }
 
-        public override void OnFilesLoadSuccess(string source, string[] fileNames)
+        public override void OnSourceLoadSuccess(string source, string[] fileNames)
         {
-            base.OnFilesLoadSuccess(source, fileNames);
+            base.OnSourceLoadSuccess(source, fileNames);
             ConsoleDebug($"image load success: {source}, {string.Join(",", fileNames)}", _imageScreenPrefixes);
             if (source != _siSource) return;
             if (!fileNames.Has(_siFileName)) return;
             _siLocalSource = source;
             _siLocalFileName = _siFileName;
+            
+            controller.LoadFile(this, source, _siFileName);
+        }
+
+        public override void OnSourceLoadFailed(LoadError error)
+        {
+            base.OnSourceLoadFailed(error);
+            ConsoleError($"image load failed: {error.GetString()}", _imageScreenPrefixes);
+            SetLoading(false);
+        }
+
+        public override void OnFileLoadSuccess(string source, string fileUrl, string channel)
+        {
             var texture = controller.CcGetTexture(_siLocalSource, _siLocalFileName);
             if (texture != null)
             {
@@ -119,17 +132,21 @@ namespace jp.ootr.ImageScreen
             animator.SetBool(_animatorShowSplash, false);
         }
 
-        public override void OnFilesLoadFailed(LoadError error)
-        {
-            base.OnFilesLoadFailed(error);
-            ConsoleError($"image load failed: {error.GetString()}", _imageScreenPrefixes);
-            SetLoading(false);
-        }
-
         protected virtual void SetLoading(bool loading)
         {
             _isLoading = loading;
             animator.SetBool(_animatorIsLoading, loading);
+        }
+
+        public override void OnPlayerJoined(VRCPlayerApi player)
+        {
+            base.OnPlayerJoined(player);
+            if (player.isLocal || !Networking.IsOwner(gameObject))
+            {
+                return;
+            }
+            
+            Sync();
         }
 
         public override bool IsCastableDevice()
