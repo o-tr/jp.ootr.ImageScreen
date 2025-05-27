@@ -107,7 +107,7 @@ namespace jp.ootr.ImageScreen
             _siLocalSource = source;
             _siLocalFileName = _siFileName;
             
-            controller.LoadFile(this, source, _siFileName);
+            controller.LoadFile(this, source, _siFileName, 100);
         }
 
         public override void OnSourceLoadFailed(LoadError error)
@@ -119,6 +119,8 @@ namespace jp.ootr.ImageScreen
 
         public override void OnFileLoadSuccess(string source, string fileUrl, string channel)
         {
+            base.OnFileLoadSuccess(source, fileUrl, channel);
+            ConsoleDebug($"image file load success: {source}, {fileUrl}, {channel}", _imageScreenPrefixes);
             var texture = controller.CcGetTexture(_siLocalSource, _siLocalFileName);
             if (texture != null)
             {
