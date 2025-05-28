@@ -140,17 +140,6 @@ namespace jp.ootr.ImageScreen
             animator.SetBool(_animatorIsLoading, loading);
         }
 
-        public override void OnPlayerJoined(VRCPlayerApi player)
-        {
-            base.OnPlayerJoined(player);
-            if (player.isLocal || !Networking.IsOwner(gameObject))
-            {
-                return;
-            }
-            
-            Sync();
-        }
-
         public override bool IsCastableDevice()
         {
             return true;
