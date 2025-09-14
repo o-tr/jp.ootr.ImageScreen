@@ -26,14 +26,14 @@ namespace jp.ootr.ImageScreen
 
         private readonly string[] _imageScreenPrefixes = { "ImageScreen" };
 
+        private bool _isInitialized;
+
         private bool _isLoading;
         [UdonSynced] private string _siFileName;
         private string _siLocalFileName;
         private string _siLocalSource;
 
         [UdonSynced] private string _siSource;
-        
-        private bool _isInitialized = false;
 
         public override string GetClassName()
         {
@@ -56,7 +56,7 @@ namespace jp.ootr.ImageScreen
             if (_isLoading || _siSource == tmpUrlStr || tmpUrlStr.IsNullOrEmpty()) return;
             if (!tmpUrlStr.IsValidUrl(out var error))
             {
-                OnFilesLoadFailed(error);
+                OnSourceLoadFailed(error);
                 return;
             }
 
@@ -92,34 +92,46 @@ namespace jp.ootr.ImageScreen
             ConsoleDebug($"_OnDeserialization: {_siSource}, {_siFileName}", _imageScreenPrefixes);
             SetLoading(true);
             controller.CcReleaseTexture(_siLocalSource, _siLocalFileName);
-            
+
             _siFileName.ParseFileName(out var type, out var options);
-            
+
             LLIFetchImage(_siSource, type, options);
         }
 
-        public override void OnFilesLoadSuccess(string source, string[] fileNames)
+        public override void OnSourceLoadSuccess(string source, string[] fileNames)
         {
-            base.OnFilesLoadSuccess(source, fileNames);
-            ConsoleDebug($"image load success: {source}, {string.Join(",",fileNames)}", _imageScreenPrefixes);
+            base.OnSourceLoadSuccess(source, fileNames);
+            ConsoleDebug($"image load success: {source}, {string.Join(",", fileNames)}", _imageScreenPrefixes);
             if (source != _siSource) return;
             if (!fileNames.Has(_siFileName)) return;
             _siLocalSource = source;
             _siLocalFileName = _siFileName;
+            
+            controller.LoadFile(this, source, _siFileName, 100);
+        }
+
+        public override void OnSourceLoadFailed(LoadError error)
+        {
+            base.OnSourceLoadFailed(error);
+            ConsoleError($"image load failed: {error.GetString()}", _imageScreenPrefixes);
+            SetLoading(false);
+        }
+
+        public override void OnFileLoadSuccess(string source, string fileUrl, string channel)
+        {
+            base.OnFileLoadSuccess(source, fileUrl, channel);
+            ConsoleDebug($"image file load success: {source}, {fileUrl}, {channel}", _imageScreenPrefixes);
             var texture = controller.CcGetTexture(_siLocalSource, _siLocalFileName);
-            image.texture = texture;
-            aspectRatioFitter.aspectRatio = (float)texture.width / texture.height;
+            if (texture != null)
+            {
+                image.texture = texture;
+                aspectRatioFitter.aspectRatio = (float)texture.width / texture.height;
+            }
+
             SetLoading(false);
             if (_isInitialized) return;
             _isInitialized = true;
             animator.SetBool(_animatorShowSplash, false);
-        }
-
-        public override void OnFilesLoadFailed(LoadError error)
-        {
-            base.OnFilesLoadFailed(error);
-            ConsoleError($"image load failed: {error.GetString()}", _imageScreenPrefixes);
-            SetLoading(false);
         }
 
         protected virtual void SetLoading(bool loading)
