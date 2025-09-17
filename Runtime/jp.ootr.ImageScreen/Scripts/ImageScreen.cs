@@ -106,7 +106,7 @@ namespace jp.ootr.ImageScreen
             if (!fileNames.Has(_siFileName)) return;
             _siLocalSource = source;
             _siLocalFileName = _siFileName;
-            
+
             controller.LoadFile(this, source, _siFileName, 100);
         }
 
