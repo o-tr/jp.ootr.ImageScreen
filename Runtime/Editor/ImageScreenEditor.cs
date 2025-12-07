@@ -3,7 +3,10 @@ using jp.ootr.common;
 using jp.ootr.ImageDeviceController.Editor;
 using TMPro;
 using UnityEditor;
+using UnityEditor.Build;
+using UnityEditor.Build.Reporting;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 using VRC.SDKBase.Editor.BuildPipeline;
 
 namespace jp.ootr.ImageScreen.Editor
@@ -29,9 +32,6 @@ namespace jp.ootr.ImageScreen.Editor
         static PlayModeNotifier()
         {
             EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-
-            var scripts = ComponentUtils.GetAllComponents<ImageScreen>();
-            ImageScreenUtils.UpdateScreenNames(scripts.ToArray());
         }
 
         private static void OnPlayModeStateChanged(PlayModeStateChange state)
@@ -44,13 +44,23 @@ namespace jp.ootr.ImageScreen.Editor
         }
     }
 
+    public class ScreenNameUpdater : IProcessSceneWithReport
+    {
+        public int callbackOrder => 0;
+
+        public void OnProcessScene(Scene scene, BuildReport report)
+        {
+            var scripts = ComponentUtils.GetAllComponents<ImageScreen>();
+            ImageScreenUtils.UpdateScreenNames(scripts.ToArray());
+        }
+    }
+
     public class SetObjectReferences : UnityEditor.Editor, IVRCSDKBuildRequestedCallback
     {
         public int callbackOrder => 10;
 
         public bool OnBuildRequested(VRCSDKRequestedBuildType requestedBuildType)
         {
-            ImageScreenUtils.UpdateScreenNames(ComponentUtils.GetAllComponents<ImageScreen>().ToArray());
             return CommonDeviceUtils.SetupDevices();
         }
     }
